@@ -1,0 +1,277 @@
+<!-- index.html -->
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title></title>
+           <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+  
+    <script src="angular.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>    
+     <script type="text/javascript" src="noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+    <script src="noty/js/noty/jquery.noty.js"></script>
+    <link rel="stylesheet" href="fontawesome/css/font-awesome.min.css">
+
+     
+    <style type="text/css"> #myModal .modal-dialog  {width:900px;}; </style>
+
+ 
+
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #todo-list              { margin-bottom:30px; }
+    </style>
+
+
+
+
+</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+    <div class="container" >
+      <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header"><a class="navbar-brand brandfont" > <span id="tooltip"class="btn btn-info btn-xs navfont" style="font-weight:bold;" data-placement="bottom" data-toggle="tooltip" data-original-title="Total since creation.">{{todos.length}} </span></a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-menubuilder">
+            <ul class="nav navbar-nav navbar-left navfont">
+                <li><a href="about.html" data-toggle="modal" data-target="#myModal4">about</a>
+                </li>
+                <li><a href="policy.html" data-toggle="modal" data-target="#myModal3">policy</a>
+                </li>
+                
+ <li id="a">
+                
+              </li>
+            </ul>
+            <div class="navbar-btn">
+                    <a href="#" class="btn btn-info a navfont"  data-toggle="modal" data-target="#myModal">Submit your story</a>
+                </div>
+        </div>
+    </div>
+</div>
+
+        <!-- HEADER AND TODO COUNT -->
+        
+           
+           
+        <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title navfont" id="myModalLabel" style="text-align:center;">Submit your story</h4>
+      </div>
+      <div class="modal-body">
+         <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <form name="form">
+                    <div class="form-group">
+
+                            <span class="navfont">Your Nick Name</span>
+                            <input  type="text" class="form-control input-sm noborder" placeholder="*Required" ng-model="formData.name" ng-required="required"><br>
+                              <span class="navfont">Your Email</span> <span  class="navfont tooltip2" data-placement="right" data-toggle="tooltip2" data-original-title="will notify you once yourmstory is submitted to the site." style="opacity:0.5;">[?]</span>
+                            <input  type="email" class="form-control input-sm noborder" placeholder="*Optional" ng-model="formData.email">
+                       
+                        
+                    <div ><br>
+                         <span class="navfont">Your Story</span>
+                        <textarea type="text" name="InputMessage" spellcheck="true" id="textarea" placeholder="" style = "resize:none" maxlength="199"class="form-control am" cols="19"rows="7" r ng-model="formData.text"  ng-required="required"></textarea>
+                        
+                    </div>
+                    <div class="input-group-addon noborder"><span id="textarea_feedback"></span></div>
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        
+                       
+                    </div>
+
+                    
+                </form>
+                   
+            </div>
+            <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" data-dismiss="modal" class="btn btn-info btn-lg center-block"  data-toggle="modal" data-target="#myModal2" ng-disabled="(!formData.text || !formData.name)" onClick="reset()" ng-click="createTodo()">Submit</button>
+           
+        </div>
+
+    </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header successheader">
+        <button type="button" class="close" data-dismiss="modal" style="color:white;" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title navfont" id="myModalLabel" style="color:white; text-align:center;"><i class="fa fa-check-circle-o fa-2x successsubmit" aria-hidden="true"></i> Success</h3>
+      </div>
+      <div class="modal-body">
+         <!-- FORM TO CREATE TODOS -->
+         <div></div>
+         Your story has been submitted.
+
+    </div>
+      </div>
+     
+    </div>
+  </div>
+
+<!--  terms Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title navfont" id="myModalLabel" style="color:white; text-align:center;">Terms</h3>
+      </div>
+      <div class="modal-body">
+         <section><h2>User Conduct</h2>
+
+
+</section>
+         
+
+    </div>
+      </div>
+     
+    </div>
+  </div>
+
+<!--  terms Modal -->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title navfont" id="myModalLabel" style="color:white; text-align:center;">About</h3>
+      </div>
+      <div class="modal-body">
+      
+
+    </div>
+      </div>
+     
+    </div>
+  </div>
+           
+            
+
+
+    
+
+        
+
+        <!-- TODO LIST -->
+        <div id="todo-list" class="container">
+        <div class="col-md-11 col-lg-7 col-lg-offset-2 col-xs-11">
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <div class="checkbox" ng-repeat="item in todos">
+                    <div class = "panel panel-default container-fluid panelboarder" style="word-wrap: break-word; ">
+   <div class = "panel-body">
+      {{ item.text }} 
+   </div>
+   
+   <div class = "panel-footer" style="font-style: italic; opacity: 0.5;">by {{ item.name }}
+   <button class="fa fa-gratipay" ng-click="addLike(item)" aria-hidden="true"> {{ item.counter }}</button><a class="fa fa-twitter-square fa-2x tweet" aria-hidden="true" href="https://twitter.com/share?url=google.com&text={{todo.text}}" class="twitter-share-button" data-via="MforMesam" data-text={{todo.text}}> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a>
+</div>         
+                </div>
+
+            </div>
+      </div>
+       <div class="push"></div>
+    </div>
+
+
+
+
+       <script type="text/javascript"> 
+
+       text_max = 199;
+       $(document).ready(function() {
+    
+
+    $('#textarea_feedback').html(text_max + ' characters remaining');
+
+    $('#textarea').keyup(function() {
+        var text_length = $('#textarea').val().length;
+         text_remaining = text_max - text_length;
+
+
+        $('#textarea_feedback').html(text_remaining + ' characters remaining');
+        
+        $('textarea.am').on('keyup', function() {
+    limitText(this, 199)
+});
+
+function limitText(field, maxChar){
+    var ref = $(field),
+        val = ref.val();
+    if ( val.length >= maxChar ){
+        ref.val(function() {
+            console.log(val.substr(0, maxChar))
+            return val.substr(0, maxChar);       
+        });
+    }
+}
+    });
+      });
+    
+     var reset = function () 
+     {
+        text_remaining = 199;
+        $('#textarea_feedback').html(text_remaining + ' characters remaining');
+
+     };
+
+ 
+
+
+ $(document).ready(function(){
+            $('#tooltip').tooltip();
+            $('.tooltip2').tooltip();
+         });
+
+
+
+       </script>
+
+
+
+<!-- <nav class="navbar navbar-default navbar-fixed-bottom footer">
+  <div class="container a">
+  <span class="brandfont" style="color:#80ccff;"></span><span class="footme"> since creation</span><span class="brandfont"style="color:#80ccff;"> {{todos.length}}</span>
+  </div>
+</nav> -->
+</body>
+   
+
+</html>
